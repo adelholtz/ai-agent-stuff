@@ -194,6 +194,7 @@ Using the **template below**, populate all sections with the extracted informati
 - **Be accurate**: Ensure file paths, code references, technical details are correct
 - **Use proper markdown**: Correct heading levels, lists, code blocks, links
 - **Session Context**: Write 2-4 sentences summarizing what was worked on
+- **Front Matter**: Generate a concise 1-2 sentence description and relevant tags based on session content
 
 ### Step 10: Save File and Confirm
 
@@ -219,6 +220,11 @@ If fewer than 3 main findings, list what's available. If no significant findings
 Use this exact template structure when generating the memory file:
 
 ```markdown
+---
+description: [1-2 sentence summary of the session's main accomplishments and focus]
+tags: [tag1, tag2, tag3, tag4, tag5]
+---
+
 # Technical Memory - [Project Name/Basename]
 
 **Date**: YYYY-MM-DD HH:MM:SS  
@@ -324,10 +330,44 @@ Use this exact template structure when generating the memory file:
 [Additional observations or context that doesn't fit elsewhere, or "None"]
 ```
 
+### Front Matter Guidelines
+
+The front matter at the top of the memory file should include:
+
+**Description Field:**
+- Write a concise 1-2 sentence summary capturing the main accomplishments and focus of the session
+- Should highlight what was worked on and what was achieved
+- Examples:
+  - "Implemented user authentication with JWT tokens and added middleware for protected routes. Configured session management and error handling."
+  - "Debugged Kubernetes pod restart issues and optimized resource allocation for production deployment."
+  - "Explored React component architecture and refactored state management using Redux toolkit."
+
+**Tags Field:**
+- Include 3-7 relevant tags that categorize the main topics covered in the session
+- Tags should reflect: programming languages, frameworks, tools, concepts, technologies
+- Use lowercase, hyphenated format for multi-word tags (e.g., "machine-learning", "api-design")
+- Examples of good tags:
+  - Languages: `python`, `javascript`, `typescript`, `go`, `rust`
+  - Frameworks: `react`, `nextjs`, `django`, `express`, `flask`
+  - Tools: `docker`, `kubernetes`, `git`, `webpack`, `vite`
+  - Concepts: `authentication`, `debugging`, `testing`, `deployment`, `refactoring`
+  - Technologies: `postgresql`, `redis`, `aws`, `graphql`, `rest-api`
+
+Example front matter:
+```yaml
+---
+description: Implemented user authentication system with JWT tokens and role-based access control. Added middleware for protected routes and session management.
+tags: [nodejs, express, authentication, jwt, security, middleware]
+---
+```
+
 ## Quality Checks
 
 Before saving the file, verify:
 
+- ✅ Front matter is properly formatted with opening and closing `---` delimiters
+- ✅ Description field contains a meaningful 1-2 sentence summary
+- ✅ Tags field includes 3-7 relevant, lowercase tags in array format
 - ✅ All timestamps are accurate and in correct format
 - ✅ Paths are correct and absolute where specified
 - ✅ Markdown formatting is valid (headers, lists, links)
@@ -395,6 +435,92 @@ Main findings:
   - Implemented resource limits to prevent OOM kills
 
 Related sessions: 3 previous sessions linked
+```
+
+## Example Memory File Contents
+
+### Example 1: File with Front Matter
+
+This shows what an actual generated memory file looks like with front matter:
+
+```markdown
+---
+description: Created new /save command for capturing session insights and implemented file conflict resolution with numeric suffixes. Discovered OpenCode commands use markdown instruction files.
+tags: [opencode, markdown, command-development, file-management, session-analysis]
+---
+
+# Technical Memory - opencode-commands
+
+**Date**: 2026-02-05 14:35:22  
+**Working Directory**: /Users/dev/projects/opencode-commands  
+**Repository**: opencode-commands
+
+**Session Metadata**:
+- OpenCode Version: N/A
+- Model: claude-sonnet-4.5
+- Conversation Turns: N/A
+
+**Related Sessions**: 
+- [memory-20260204-142344.md](./memory-20260204-142344.md)
+- [memory-20260204-091533.md](./memory-20260204-091533.md)
+
+---
+
+## Session Context
+
+Implemented a new /save command that automatically analyzes agent sessions and captures technical findings. The command creates structured memory files with comprehensive documentation including technical discoveries, code changes, and learnings for future reference.
+
+---
+
+## Technical Findings
+
+### Key Discoveries
+- OpenCode commands are defined using markdown files with specific instruction formats
+- Commands can analyze conversation history to extract technical insights
+- File conflict resolution requires numeric suffix handling (-2, -3, etc.)
+
+### Patterns Identified
+- Template-based documentation generation for consistency
+- Automatic cross-referencing between related session files
+- Directory-based organization using project basename
+
+### Solutions & Approaches
+- Implemented automatic filename conflict resolution with incrementing suffixes
+- Used timestamp-based filenames for default auto-generated names
+- Created comprehensive template covering all technical aspects of a session
+
+...
+```
+
+### Example 2: Kubernetes Debugging Session
+
+```markdown
+---
+description: Debugged Kubernetes pod restart issues caused by misconfigured liveness probes and memory leaks. Implemented resource limits to prevent OOM kills.
+tags: [kubernetes, debugging, containers, devops, resource-management, memory-optimization]
+---
+
+# Technical Memory - infra
+
+**Date**: 2026-02-05 16:22:15  
+**Working Directory**: /Users/dev/projects/infra  
+**Repository**: infrastructure
+
+**Session Metadata**:
+- OpenCode Version: N/A
+- Model: claude-sonnet-4.5
+- Conversation Turns: N/A
+
+**Related Sessions**: 
+- [memory-20260203-101523.md](./memory-20260203-101523.md)
+
+---
+
+## Session Context
+
+Investigated and resolved critical production issues with Kubernetes pods experiencing restart loops. Identified root causes as misconfigured liveness probes and memory leaks in data processing containers, then implemented appropriate fixes and resource limits.
+
+...
 ```
 
 ## Notes
