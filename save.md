@@ -14,10 +14,12 @@ This command captures technical discoveries, patterns, solutions, code changes, 
 ## Usage
 
 ```bash
-/save                           # Save with auto-generated timestamp filename
-/save my-findings               # Save as my-findings.md (auto-append .md)
-/save kubernetes-debug.md       # Save as kubernetes-debug.md
+/save                                # Save with auto-generated timestamp filename
+/save my-findings                    # Custom filename, auto-generated tags
+/save my-findings --tags k8s,debug   # Custom filename + user tags merged with auto-generated
 ```
+
+Note: The first positional argument is the filename. Tags provided via `--tags` are comma-separated and merged with auto-generated tags (deduplicated). If `--tags` is omitted, only auto-generated tags are used.
 
 ## Implementation Instructions
 
@@ -183,6 +185,19 @@ Review the **entire conversation** from start to finish and extract:
 - **Related Files**: Key files in the codebase referenced
 - **Commands Reference**: Useful commands discovered or scripts created
 
+#### Tags
+Auto-extract tags from the session content. Extract from these categories:
+- **Task types**: `debugging`, `feature`, `refactoring`, `exploration`, `configuration`, `documentation`
+- **Languages/frameworks**: Languages and frameworks mentioned or used (e.g., `python`, `react`, `kubernetes`, `typescript`)
+- **Tools**: Development tools used (e.g., `git`, `docker`, `terraform`, `webpack`)
+- **Domain**: Domain-specific tags (e.g., `api`, `frontend`, `database`, `ci-cd`, `auth`, `testing`)
+
+Tag formatting rules:
+- All lowercase
+- Hyphen-separated (no spaces or underscores)
+- Concise (1-2 words per tag)
+- Aim for 3-8 tags total that accurately characterize the session
+
 ### Step 9: Generate Memory File
 
 Using the **template below**, populate all sections with the extracted information.
@@ -194,6 +209,10 @@ Using the **template below**, populate all sections with the extracted informati
 - **Be accurate**: Ensure file paths, code references, technical details are correct
 - **Use proper markdown**: Correct heading levels, lists, code blocks, links
 - **Session Context**: Write 2-4 sentences summarizing what was worked on
+- **Frontmatter**: Place YAML frontmatter at the very top of the file (before `# Technical Memory`):
+  - `description`: Reuse the same 2-4 sentence overview written for Session Context
+  - `tags`: Combine auto-generated tags with any user-provided `--tags` values, deduplicated
+  - Format tags as a YAML inline list: `[tag1, tag2, tag3]`
 
 ### Step 10: Save File and Confirm
 
@@ -219,9 +238,14 @@ If fewer than 3 main findings, list what's available. If no significant findings
 Use this exact template structure when generating the memory file:
 
 ```markdown
+---
+description: [Same 2-4 sentence overview as Session Context]
+tags: [auto-generated-tag-1, auto-generated-tag-2, user-tag-1]
+---
+
 # Technical Memory - [Project Name/Basename]
 
-**Date**: YYYY-MM-DD HH:MM:SS  
+**Date**: YYYY-MM-DD HH:MM:SS
 **Working Directory**: /full/path/to/directory  
 **Repository**: [git repo name if applicable, or "N/A"]
 
@@ -335,6 +359,9 @@ Before saving the file, verify:
 - ✅ Cross-references point to actual existing files
 - ✅ Metadata shows "N/A" where unavailable (not blank or error messages)
 - ✅ Sections contain "None" or similar if truly empty (not generic boilerplate)
+- ✅ Frontmatter is valid YAML (proper `---` delimiters, correct `description` and `tags` field names)
+- ✅ Tags are lowercase and hyphen-separated (no spaces, underscores, or uppercase)
+- ✅ Description in frontmatter matches the Session Context content
 - ✅ File was successfully written to disk
 - ✅ Filename conflict resolution worked if needed
 
