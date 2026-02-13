@@ -186,10 +186,11 @@ async function main() {
     }
     console.log(`  Location: ~/.agents/brain/memory-index.json`);
 
-    process.exit(0);
+    // Use exitCode instead of exit() to allow graceful shutdown
+    process.exitCode = 0;
   } catch (error) {
     console.error('Error building index:', error.message);
-    process.exit(1);
+    process.exitCode = 1;
   }
 }
 
