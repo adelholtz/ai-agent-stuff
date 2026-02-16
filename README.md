@@ -55,15 +55,10 @@ The index will be generate at the first run of `/save` if not already created.
 After this, the system will automatically update the index with each new saved session.
 
 4. Add symlinks for command accessibility:
-```bash
-ln -s memory-index/commands/recall.md recall.md
-ln -s memory-index/commands/save.md save.md
-```
 
-or
 ```bash
-ln -s ~/.claude/commands/recall.md ~/.agents/memory-index/commands/recall.md
-ln -s ~/.claude/commands/save.md ~/.agents/memory-index/commands/save.md
+ln -s ~/.claude/commands/recall.md ~/.agents/commands/recall.md
+ln -s ~/.claude/commands/save.md ~/.agents/commands/save.md
 ```
 
 ### Usage Examples
