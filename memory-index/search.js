@@ -5,12 +5,17 @@
  * Loads embeddings from memory-index.json and ranks by cosine similarity
  */
 
-const fs = require('fs');
-const path = require('path');
-const os = require('os');
-const { embed, cosineSimilarity } = require('./embed.js');
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
+const { embed, cosineSimilarity } = require("./embed.js");
 
-const INDEX_PATH = path.join(os.homedir(), '.agents', 'brain', 'memory-index.json');
+const INDEX_PATH = path.join(
+  os.homedir(),
+  ".agents",
+  "brain",
+  "memory-index.json",
+);
 const DEFAULT_THRESHOLD = 0.3;
 const DEFAULT_MAX_RESULTS = 5;
 
@@ -29,11 +34,11 @@ async function searchMemories(query, options = {}) {
   // Load index
   let index;
   try {
-    const content = fs.readFileSync(INDEX_PATH, 'utf8');
+    const content = fs.readFileSync(INDEX_PATH, "utf8");
     index = JSON.parse(content);
   } catch (error) {
-    console.error('Cannot load memory index:', error.message);
-    console.error('Run: cd memory-index && ./build-index.js --embed');
+    console.error("Cannot load memory index:", error.message);
+    console.error("Run: cd memory-index && ./build-index.js --embed");
     return [];
   }
 
@@ -52,8 +57,8 @@ async function searchMemories(query, options = {}) {
         filepath,
         basename: entry.basename,
         filename: entry.filename,
-        description: entry.description || '',
-        tags: entry.tags || []
+        description: entry.description || "",
+        tags: entry.tags || [],
       });
     }
   }
@@ -76,19 +81,22 @@ function formatResults(results, query) {
 
   const lines = [];
   results.forEach((result, i) => {
-    const desc = result.description.length > 100
-      ? result.description.slice(0, 100) + '...'
-      : result.description;
-    lines.push(`${i + 1}. [${result.score.toFixed(2)}] ${result.basename}/${result.filename}`);
+    const desc =
+      result.description.length > 100
+        ? result.description.slice(0, 100) + "..."
+        : result.description;
+    lines.push(
+      `${i + 1}. [${result.score.toFixed(2)}] ${result.basename}/${result.filename}`,
+    );
     lines.push(`   "${desc}"`);
     if (result.tags.length > 0) {
-      lines.push(`   Tags: ${result.tags.join(', ')}`);
+      lines.push(`   Tags: ${result.tags.join(", ")}`);
     }
-    lines.push('');
+    lines.push("");
   });
 
   lines.push(`Found ${results.length} relevant memories`);
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 /**
@@ -97,18 +105,18 @@ function formatResults(results, query) {
 async function main() {
   const args = process.argv.slice(2);
 
-  if (args.length === 0 || args[0] === '--help') {
-    console.log('Usage: node search.js <query>');
-    console.log('');
-    console.log('Search memories by semantic similarity.');
-    console.log('');
-    console.log('Examples:');
+  if (args.length === 0 || args[0] === "--help") {
+    console.log("Usage: node search.js <query>");
+    console.log("");
+    console.log("Search memories by semantic similarity.");
+    console.log("");
+    console.log("Examples:");
     console.log('  node search.js "kubernetes debugging"');
     console.log('  node search.js "authentication flow issues"');
     process.exit(args.length === 0 ? 1 : 0);
   }
 
-  const query = args.join(' ');
+  const query = args.join(" ");
   console.log(`Searching memories for: "${query}"...\n`);
 
   const results = await searchMemories(query);
@@ -116,8 +124,8 @@ async function main() {
 }
 
 if (require.main === module) {
-  main().catch(err => {
-    console.error('Search failed:', err);
+  main().catch((err) => {
+    console.error("Search failed:", err);
     process.exit(1);
   });
 }
