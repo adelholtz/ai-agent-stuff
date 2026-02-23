@@ -26,7 +26,7 @@ Intelligent knowledge management with semantic search capabilities.
 - 91% faster than filesystem scanning (~28ms vs 330ms)
 - Scales efficiently to 100+ memory files
 
-### 📋 Other Commands
+### Other Commands
 
 WIP - Stay tuned for more tools to enhance your AI agent workflows
 
