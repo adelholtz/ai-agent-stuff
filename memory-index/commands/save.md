@@ -255,37 +255,16 @@ Example:
 
 ### Step 8: Analyze Conversation History
 
-Review the **entire conversation** from start to finish and extract:
+Review the **entire conversation** from start to finish and extract content for each category below. Extract content ONLY if it genuinely exists — do not force content into categories.
 
-#### Technical Findings
-- **Key Discoveries**: Major technical findings about code, architecture, systems, performance
-- **Patterns Identified**: Design patterns, code patterns, anti-patterns observed or implemented
-- **Solutions & Approaches**: Problems encountered, solutions implemented, why specific approaches were chosen
-
-#### Learnings & Insights
-- **Technical Lessons**: Specific lessons about languages, frameworks, tools, behaviors
-- **Best Practices**: Practices identified, reinforced, or discovered
-- **Gotchas & Edge Cases**: Non-obvious behaviors, pitfalls, edge cases to watch for
-
-#### Code Changes
-- **Files Modified**: High-level summary of changes made to existing files
-- **Files Created**: New files, modules, or components added and their purposes
-- **Architecture Impact**: How changes affect overall system architecture, new dependencies
-
-#### Tools & Technologies
-- **Tools Used**: Development tools, CLI utilities, scripts created
-- **Libraries & Frameworks**: Libraries explored, integrated, or configured
-- **Configuration Changes**: Environment variables, config files, infrastructure changes
-
-#### Outstanding Items
-- **Action Items**: Tasks remaining to be completed
-- **Future Considerations**: Ideas for improvement, features to add later
-- **Open Questions**: Questions needing investigation, uncertainties to resolve
-
-#### References
-- **Documentation**: Official docs, blog posts, articles consulted
-- **Related Files**: Key files in the codebase referenced
-- **Commands Reference**: Useful commands discovered or scripts created
+- **Session Context** *(required)*: 2-4 sentence overview of what was worked on
+- **Key Discoveries** *(conditional)*: Major technical findings, patterns identified, and solutions implemented
+- **Learnings** *(conditional)*: Technical lessons, best practices, and gotchas/edge cases
+- **Changes Made** *(conditional — only if code changes occurred)*: Files modified/created and their purpose, plus any architectural implications
+- **Tools & Technologies** *(conditional)*: Notable tools, libraries, and configuration changes actually used
+- **Outstanding Items** *(conditional)*: Remaining TODOs, future ideas, or unresolved questions
+- **References** *(conditional)*: Documentation consulted, key files, and useful commands
+- **Notes** *(conditional)*: Additional observations that don't fit elsewhere
 
 #### Tags
 Auto-extract tags from the session content. Extract from these categories:
@@ -302,11 +281,12 @@ Tag formatting rules:
 
 ### Step 9: Generate Memory File
 
-Using the **template below**, populate all sections with the extracted information.
+Using the **template below**, populate sections with the extracted information.
 
 **Important guidelines:**
-- **All sections must be present** in the output
-- **For empty sections**: Use "None in this session" or similar rather than leaving blank
+- **Session Context is the only required section** — all others are conditional
+- **Omit sections entirely** if they have no meaningful content (do not use "None in this session" or similar placeholders)
+- **Use flat bullet lists with bold lead-ins** (`- **Label**: content`) instead of `###` subsection headers
 - **Be concise**: Focus on information valuable for future reference
 - **Be accurate**: Ensure file paths, code references, technical details are correct
 - **Use proper markdown**: Correct heading levels, lists, code blocks, links
@@ -346,8 +326,9 @@ try {
 ✓ Session memory saved successfully!
 
 Location: ~/.agents/brain/<basename>/<filename>
-Sections populated: X/9
-Main findings: 
+Sections: Context, Discoveries, Learnings, Changes, Tools
+Tags: tag1, tag2, tag3
+Main findings:
   - [Most important finding 1]
   - [Most important finding 2]
   - [Most important finding 3]
@@ -355,11 +336,11 @@ Main findings:
 Related sessions: X previous sessions linked
 ```
 
-If fewer than 3 main findings, list what's available. If no significant findings, note that.
+List only the sections that were actually included (not a fixed count). If fewer than 3 main findings, list what's available. If no significant findings, note that.
 
 ## Memory File Template
 
-Use this exact template structure when generating the memory file:
+Use this template structure when generating the memory file. **Only include sections that have meaningful content** — Session Context is the only required section.
 
 ```markdown
 ---
@@ -370,14 +351,14 @@ tags: [auto-generated-tag-1, auto-generated-tag-2, user-tag-1]
 # Technical Memory - [Project Name/Basename]
 
 **Date**: YYYY-MM-DD HH:MM:SS
-**Working Directory**: /full/path/to/directory  
+**Working Directory**: /full/path/to/directory
 **Repository**: [git repo name if applicable, or "N/A"]
 
 **Session Metadata**:
 - Model: claude-sonnet-4.5
 - CLI Used: [CLI name or "N/A"]
 
-**Related Sessions**: 
+**Related Sessions**:
 [List of up to 3 most recent memory-*.md files with links, or "None"]
 
 ---
@@ -388,87 +369,71 @@ tags: [auto-generated-tag-1, auto-generated-tag-2, user-tag-1]
 
 ---
 
-## Technical Findings
+## Key Discoveries
 
-### Key Discoveries
-[Major technical findings made during the session, or "None in this session"]
+[Major technical findings, patterns identified, and solutions implemented.
+Use flat bullet list with bold lead-ins.]
 
-### Patterns Identified
-[Design patterns observed or implemented, or "None in this session"]
-
-### Solutions & Approaches
-[Problems encountered and how they were solved, or "None in this session"]
+- **Finding title**: Description
+- **Pattern**: Description of pattern observed or implemented
+- **Solution**: Problem encountered and how it was solved
 
 ---
 
-## Learnings & Insights
+## Learnings
 
-### Technical Lessons
-[Specific technical lessons learned, or "None in this session"]
+[Technical lessons, best practices, and gotchas/edge cases.
+Use flat bullet list with bold lead-ins.]
 
-### Best Practices
-[Best practices identified or reinforced, or "None in this session"]
-
-### Gotchas & Edge Cases
-[Edge cases discovered, pitfalls to avoid, or "None in this session"]
+- **Lesson**: Description
+- **Best practice**: Description
+- **Gotcha**: Non-obvious behavior or pitfall
 
 ---
 
-## Code Changes Summary
+## Changes Made
 
-### Files Modified
-[High-level overview of changes, or "No files modified"]
+[Files modified or created and their purpose. Only include if code changes occurred.]
 
-### Files Created
-[New files/modules added, or "No files created"]
-
-### Architecture Impact
-[How changes affect overall architecture, or "No architectural impact"]
+- `path/to/file.ext` — Description of change
+- `path/to/new-file.ext` — (new) Purpose of new file
+- **Architecture note**: Any architectural implications worth recording
 
 ---
 
 ## Tools & Technologies
 
-### Tools Used
-[Development tools utilized, or "No new tools used"]
+[Notable tools, libraries, and configuration changes. Only include items actually used or changed.]
 
-### Libraries & Frameworks
-[New libraries explored or integrated, or "No new libraries"]
-
-### Configuration Changes
-[Environment variables, config files updated, or "No configuration changes"]
+- **Tool**: How it was used
+- **Library**: Why it was used
+- **Config**: What was changed
 
 ---
 
 ## Outstanding Items
 
-### Action Items
-[Tasks that remain to be completed, or "None"]
+[Remaining TODOs, future ideas, or unresolved questions. Only include if there are actual items.]
 
-### Future Considerations
-[Ideas for improvement, features to add later, or "None"]
-
-### Open Questions
-[Questions needing investigation, or "None"]
+- **TODO**: Remaining work
+- **Future**: Idea for later
+- **Question**: Something unresolved
 
 ---
 
 ## References
 
-### Documentation
-[Official docs, articles referenced, or "None"]
+[Documentation consulted, key files, and useful commands. Only include if there are actual references.]
 
-### Related Files
-[Key files in the codebase, or "None"]
-
-### Commands Reference
-[Useful commands discovered, or "None"]
+- **Doc**: [title](url) — Why it's relevant
+- **File**: `path/to/file` — Why this file matters
+- **Command**: `command here` — What it does
 
 ---
 
 ## Notes
 
-[Additional observations or context that doesn't fit elsewhere, or "None"]
+[Additional observations or context. Only include if meaningful.]
 ```
 
 ## Quality Checks
@@ -484,7 +449,9 @@ Before saving the file, verify:
 - ✅ Related sessions show accurate match reasons (shared tags or keywords)
 - ✅ Frontmatter parsing worked correctly for all candidate files
 - ✅ Metadata shows "N/A" where unavailable (not blank or error messages)
-- ✅ Sections contain "None" or similar if truly empty (not generic boilerplate)
+- ✅ Only sections with meaningful content are included (no empty/placeholder sections)
+- ✅ Session Context section is present and contains 2-4 sentences
+- ✅ Each included section uses flat bullet lists with bold lead-ins
 - ✅ Frontmatter is valid YAML (proper `---` delimiters, correct `description` and `tags` field names)
 - ✅ Tags are lowercase and hyphen-separated (no spaces, underscores, or uppercase)
 - ✅ Description in frontmatter matches the Session Context content
@@ -506,7 +473,7 @@ Before saving the file, verify:
 
 | Scenario | Handling |
 |----------|----------|
-| No meaningful technical content | Create minimal file noting "Brief session with no significant technical findings" |
+| No meaningful technical content | Create minimal file with just Session Context section noting "Brief session with no significant technical findings" |
 | Permission denied writing to `~/.agents/brain/` | Alert user with clear error message and path that failed |
 | Not in git repository | Set Repository field to "N/A" |
 | Very long session (>50 turns) | Prioritize most important findings, summarize repetitive work |
@@ -524,8 +491,9 @@ Before saving the file, verify:
 ✓ Session memory saved successfully!
 
 Location: ~/.agents/brain/opencode-commands/memory-20260205-143522.md
-Sections populated: 8/9
-Main findings: 
+Sections: Context, Discoveries, Learnings, Changes, Tools, References
+Tags: markdown, cli-commands, file-handling, debugging
+Main findings:
   - Created new /save command for capturing session insights
   - Discovered OpenCode commands use markdown instruction files
   - Implemented file conflict resolution with numeric suffixes
@@ -539,8 +507,9 @@ Related sessions: 2 previous sessions linked
 ✓ Session memory saved successfully!
 
 Location: ~/.agents/brain/my-app/memory-20260205-091033.md
-Sections populated: 3/9
-Main findings: 
+Sections: Context
+Tags: exploration, codebase-review
+Main findings:
   - Brief exploratory session reviewing codebase structure
 
 Related sessions: None
@@ -552,7 +521,8 @@ Related sessions: None
 ✓ Session memory saved successfully!
 
 Location: ~/.agents/brain/infra/kubernetes-debugging.md
-Sections populated: 7/9
+Sections: Context, Discoveries, Learnings, Changes, Tools, Outstanding, References
+Tags: kubernetes, debugging, containers, resource-limits, liveness-probes
 Main findings:
   - Identified pod restart loop caused by misconfigured liveness probe
   - Discovered memory leak in data processing container

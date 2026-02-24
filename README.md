@@ -1,13 +1,13 @@
 # AI Agent Commands & Tools
 
-Collection of  commands and utilities for AI agents including:
+Collection of commands and utilities for AI agents including:
 
-* memory management
-* semantic searchs
+* memory management & semantic search
+* bead-based task orchestration
 
 ## Overview
 
-This repository provides a comprehensive toolkit for enhancing AI agent workflows (Claude Code, Copilot, etc.) with persistent memory, semantic search, session management, and other things(wip).
+This repository provides a toolkit for enhancing AI agent workflows (Claude Code, Copilot, etc.) with persistent memory, semantic search, and structured task management.
 
 ## Core Systems
 
@@ -26,9 +26,24 @@ Intelligent knowledge management with semantic search capabilities.
 - 91% faster than filesystem scanning (~28ms vs 330ms)
 - Scales efficiently to 100+ memory files
 
-### Other Commands
+### Bead Workflow
 
-WIP - Stay tuned for more tools to enhance your AI agent workflows
+Task orchestration for breaking plans into trackable, parallelizable units of work.
+
+**Commands:**
+- **`/implement`** - Evaluate a plan/task file and decide whether to create beads or implement directly
+- **`/create-beads`** - Break a task or plan file into bead issues, grouped into epics
+- **`/work-on-beads`** - Work through the beads backlog, parallelizing where file boundaries allow
+
+**When to use beads:**
+- 4+ independent tasks that benefit from parallel agents
+- Work spanning multiple sessions or needing handoff
+- Tasks with real dependency ordering
+
+**When to implement directly:**
+- 3 or fewer tightly coupled tasks
+- Single session, single agent
+- Tasks touching overlapping files
 
 ## Quick Start
 
@@ -51,14 +66,17 @@ npm install
 ./build-index.js --embed
 ```
 
-The index will be generate at the first run of `/save` if not already created.
+The index will be generated at the first run of `/save` if not already created.
 After this, the system will automatically update the index with each new saved session.
 
 4. Add symlinks for command accessibility:
 
 ```bash
-ln -s ~/.claude/commands/recall.md ~/.agents/commands/recall.md
-ln -s ~/.claude/commands/save.md ~/.agents/commands/save.md
+ln -s ~/.agents/commands/memory-index/commands/recall.md ~/.claude/commands/recall.md
+ln -s ~/.agents/commands/memory-index/commands/save.md ~/.claude/commands/save.md
+ln -s ~/.agents/commands/implement.md ~/.claude/commands/implement.md
+ln -s ~/.agents/commands/create-beads.md ~/.claude/commands/create-beads.md
+ln -s ~/.agents/commands/work-on-beads.md ~/.claude/commands/work-on-beads.md
 ```
 
 ### Usage Examples
@@ -75,6 +93,19 @@ ln -s ~/.claude/commands/save.md ~/.agents/commands/save.md
 /recall kubernetes network debugging
 /recall "how did I fix the auth bug?"
 /recall docker container memory leak
+```
+
+#### Bead Workflow
+
+```bash
+# Evaluate a plan and decide on strategy
+/implement path/to/plan.md
+
+# Create beads from a plan file
+/create-beads path/to/plan.md
+
+# Start working through the backlog
+/work-on-beads
 ```
 
 ## Architecture
@@ -147,23 +178,25 @@ ln -s ~/.claude/commands/save.md ~/.agents/commands/save.md
 ├── LICENSE
 ├── recall.md                    # Symlink → memory-index/commands/recall.md
 ├── save.md                      # Symlink → memory-index/commands/save.md
+├── implement.md                 # Bead workflow: decide strategy
+├── create-beads.md              # Bead workflow: create beads from plan
+├── work-on-beads.md             # Bead workflow: execute beads
 │
-├── memory-index/                # Memory system implementation
-│   ├── README.md                # Full system documentation
-│   ├── commands/                # Command specifications
-│   │   ├── recall.md
-│   │   └── save.md
-│   ├── build-index.js           # Index builder
-│   ├── update-index.js          # Incremental updates
-│   ├── embed.js                 # Embedding utility
-│   ├── search.js                # Search logic
-│   └── extract-keywords.js      # Keyword extraction
+└── memory-index/                # Memory system implementation
+    ├── README.md                # Full system documentation
+    ├── commands/                # Command specifications
+    │   ├── recall.md
+    │   └── save.md
+    ├── build-index.js           # Index builder
+    ├── update-index.js          # Incremental updates
+    ├── embed.js                 # Embedding utility
+    ├── search.js                # Search logic
+    └── extract-keywords.js      # Keyword extraction
 ```
 
 ## Documentation
 
 - **Memory Index System**: [memory-index/README.md](./memory-index/README.md)
-- **Command Specs**: [memory-index/commands/](./memory-index/commands/)
 
 ## Contributing
 
