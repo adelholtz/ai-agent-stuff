@@ -54,10 +54,8 @@ git checkout -b feat/<short-description>
 
 **Beads-tracked implementation:**
 1. Create feature branch
-2. Read the plan file
-3. Create beads issues (`bd create`) — parallelize creation with subagents if 4+
-4. Set up dependencies with `bd dep add` where needed
-5. Run `/work-on-beads` to execute
+2. Run `/create-beads <plan-file>`
+3. Run `/work-on-beads` to execute
 
 <critical>
 Default to direct implementation. Only create beads when the criteria clearly justify it. Tracking overhead on small work is waste.
