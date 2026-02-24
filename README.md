@@ -51,7 +51,7 @@ Task orchestration for breaking plans into trackable, parallelizable units of wo
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/adelholtz/ai-memory.git ~/.agents/commands
+git clone https://github.com/adelholtz/agent-commands.git ~/.agents/commands
 cd ~/.agents/commands
 ```
 
