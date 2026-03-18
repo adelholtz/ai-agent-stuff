@@ -12,3 +12,10 @@ memory-index/node_modules/
 .worktrees/
 core_piv_loop
 session-manager
+atlassian.md
+jira.md
+confluence.md
+
+# Dolt database files (added by bd init)
+.dolt/
+*.db
