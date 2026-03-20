@@ -49,8 +49,9 @@ git checkout -b feat/<short-description>
 **Direct implementation:**
 1. Create feature branch
 2. Read the plan file
-3. Work through tasks in dependency order
-4. Commit when done
+3. Use the `superpowers:executing-plans` skill if available — it provides structured execution with review checkpoints
+4. Work through tasks in dependency order
+5. Commit when done
 
 **Beads-tracked implementation:**
 1. Create feature branch
